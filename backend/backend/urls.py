@@ -17,9 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.urls import re_path as url 
-from app.views import *
+from app.views import index
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', ReactView.as_view(), name="anything"),
+    path('',index,name="index"),
+    # path('', ReactView.as_view(), name="anything"),
 ]

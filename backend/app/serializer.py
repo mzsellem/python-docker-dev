@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from .models import *
+from .models import Student
 
 class ReactSerializer(serializers.ModelSerializer):
     class Meta:
-        model = React
-        fields = ['employee', 'department']
+        model = Student
+        fields = ['name', 'des']
