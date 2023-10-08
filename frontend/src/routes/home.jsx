@@ -7,7 +7,6 @@
 
 // import * as React from "react";
 import React, { useState, useEffect } from "react";
-// import axios from "axios";
 // import Pagination from "@mui/material/Pagination";
 // import Stack from "@mui/material/Stack";
 
@@ -16,22 +15,6 @@ export default function Home() {
 
    //    const { CurrentPageInput, GoToNextPageButton, GoToPreviousPage } =
    //       pageNavigationPluginInstance;
-
-   const [data, setData] = useState([]); // State to hold the fetched data
-
-   useEffect(() => {
-      fetchData();
-   }, []); // Run this effect once when the component mounts
-
-   async function fetchData() {
-      try {
-         const response = await axios.get("/"); // Replace with your actual API endpoint
-         const responseData = response.data;
-         setData(responseData); // Update the state with the fetched data
-      } catch (error) {
-         console.error("Error fetching data:", error);
-      }
-   }
 
    return (
       <>
@@ -53,12 +36,6 @@ export default function Home() {
             </div> */}
          <div className="flex text-3xl border justify-center rounded">
             Hello BeyondMD!
-         </div>
-         <div>
-            {/* Render your data here */}
-            {data.map((item) => (
-               <div key={item.id}>{item.name}</div>
-            ))}
          </div>
          {/* </div> */}
       </>

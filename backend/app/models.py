@@ -7,22 +7,11 @@ class Student(models.Model):
     def __str__(self):
         return self.name
     
-class LastName(models.Model):
-    name=models.CharField(max_length=100)
-    def __str__(self):
-        return self.name
-
-class FirstName(models.Model):
-    name=models.CharField(max_length=100)
-    def __str__(self):
-        return self.name
-
-class Age(models.Model):
+class Patient(models.Model):
+    last_name=models.CharField(max_length=100)
+    first_name=models.CharField(max_length=100)
     age=models.IntegerField()
-    def __str__(self):
-        return self.age
+    diagnosis=models.CharField(max_length=100, blank=True)
 
-class Diagnosis(models.Model):
-    diagnosis=models.CharField(max_length=100)
     def __str__(self):
-        return self.diagnosis
+        return self.last_name + " " + self.first_name
