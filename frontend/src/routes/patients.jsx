@@ -54,35 +54,16 @@ export default function Patients() {
       },
    ];
 
-   const rows = [
-      { id: 1, lastName: "Snow", firstName: "Jon", age: 35 },
-      { id: 2, lastName: "Lannister", firstName: "Cersei", age: 42 },
-      { id: 3, lastName: "Lannister", firstName: "Jaime", age: 45 },
-      { id: 4, lastName: "Stark", firstName: "Arya", age: 16 },
-      { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: null },
-      { id: 6, lastName: "Melisandre", firstName: null, age: 150 },
-      { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
-      { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
-      { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
-   ];
+   const rows = details.map((patient) => ({
+      id: patient.id,
+      lastName: patient.last_name,
+      firstName: patient.first_name,
+      age: patient.age,
+   }));
 
    return (
       <>
          <Navbar />
-         <div className="w-screen">
-            <header>Data Generated From Django PostgreSQL</header>
-            <hr />
-            {details.map((patient, id) => (
-               <div key={id}>
-                  <div>
-                     <h2>{patient.last_name}</h2>
-                     <h3>{patient.first_name}</h3>
-                     <h3>{patient.age}</h3>
-                     <h3>{patient.id}</h3>
-                  </div>
-               </div>
-            ))}
-         </div>
          <div className="flex flex-col">
             <div className="flex justify-center pt-8 pb-4">
                {" "}
