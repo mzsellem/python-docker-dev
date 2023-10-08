@@ -11,8 +11,8 @@ class ReactView(APIView):
     serializer_class = ReactSerializer
 
     def get(self, request):
-        output = [{"employee": output.employee, "department": output.department}
-                  for output in React.objects.all()]
+        output = [{"last_name": output.last_name, "first_name": output.first_name, "age": output.age}
+                  for output in Patient.objects.all()]
         return Response(output)
 
     def post(self, request):
@@ -20,11 +20,3 @@ class ReactView(APIView):
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data)
-
-
-def patients(request):
-    obj=Patient.objects.all()
-    context={
-        "obj":obj, 
-    }
-    return render(request, "patients.jsx",context)
