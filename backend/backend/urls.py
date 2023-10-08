@@ -21,7 +21,7 @@ from app.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',index,name="index"),
-    path('patients/',patients,name="patients"),
-    path('', include('app.urls')),
+    path('', ReactView.as_view(), name="anything"),
+    # path('patients/',patients,name="patients"),
+    # path('', include('app.urls')),
 ]

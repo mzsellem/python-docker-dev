@@ -1,11 +1,9 @@
 from django.db import models
 
 # Create your models here.
-class Student(models.Model):
-    name=models.CharField(max_length=100)
-    des=models.TextField()
-    def __str__(self):
-        return self.name
+class React(models.Model):
+    employee=models.CharField(max_length=30)
+    department=models.CharField(max_length=200)
     
 class Patient(models.Model):
     last_name=models.CharField(max_length=100)
