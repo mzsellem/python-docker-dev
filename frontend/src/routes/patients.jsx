@@ -1,9 +1,9 @@
-// import Navbar from "../components/navbar";
+import Navbar from "../components/navbar";
 import * as React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
-// import ICD10Search from "../components/icd";
+import ICD10Search from "../components/icd";
 
 export default function Patients() {
    const [details, setDetails] = useState([]);
@@ -12,27 +12,35 @@ export default function Patients() {
       axios
          .get("http://localhost:8000")
          .then((res) => {
+            console.log({ res });
             const data = res.data;
             setDetails(data);
          })
          .catch((err) => {});
    }, []);
    const columns = [
-      { field: "id", headerName: "ID", width: 70 },
-      { field: "firstName", headerName: "First name", width: 130 },
-      { field: "lastName", headerName: "Last name", width: 130 },
+      { field: "id", headerName: "ID", flex: 0.5, minWidth: 200 },
+      {
+         field: "firstName",
+         headerName: "First name",
+         flex: 0.5,
+         minWidth: 200,
+      },
+      { field: "lastName", headerName: "Last name", flex: 0.5, minWidth: 200 },
       {
          field: "age",
          headerName: "Age",
          type: "number",
-         width: 90,
+         flex: 0.5,
+         minWidth: 200,
       },
       {
          field: "diagnosis",
          headerName: "Diagnosis",
          description: "This column has a value getter and is not sortable.",
          sortable: false,
-         width: 200,
+         flex: 0.5,
+         minWidth: 200,
          // valueGetter: (params) =>
          //    `${params.row.firstName || ""} ${params.row.lastName || ""}`,
          renderCell: (params) => (
@@ -60,41 +68,62 @@ export default function Patients() {
 
    return (
       <>
-         {/* <Navbar /> */}
-         <div>
+         <Navbar />
+         {/* <div className="w-screen">
             <header>Data Generated From Django PostgreSQL</header>
             <hr />
             {details.map((output, id) => (
                <div key={id}>
                   <div>
-                     <h2>{output.employee}</h2>
-                     <h3>{output.department}</h3>
+                     <h2>{output.last_name}</h2>
+                     <h3>{output.first_name}</h3>
+                     <h3>{output.age}</h3>
                   </div>
                </div>
             ))}
-         </div>
-         <div className="flex flex-col w-full justify-between p-6">
-            <div className="flex text-3xl w-full border justify-center">
-               {/* <ICD10Search /> */}
-            </div>
-            <div className="flex flex-col w-full">
-               <div className="flex">
-                  <div className="flex text-3xl mb-4">Patients</div>
-                  &nbsp; &nbsp;
-                  <button className="flex m-2">+</button>
+         </div> */}
+         <div className="flex flex-col">
+            <div className="flex justify-center pt-8 pb-4">
+               {" "}
+               <div className="flex justify-center">
+                  <h3>Last Name:&nbsp;</h3>
+                  <input className="border"></input>
+                  <button className="navbarblue text-white">Submit</button>
                </div>
-               <div className="flex flex-row height width">
-                  <DataGrid
-                     rows={rows}
-                     columns={columns}
-                     initialState={{
-                        pagination: {
-                           paginationModel: { page: 0, pageSize: 5 },
-                        },
-                     }}
-                     pageSizeOptions={[5, 10]}
-                     checkboxSelection
-                  />
+               <div className="flex justify-center">
+                  <h3>First Name:&nbsp;</h3>
+                  <input className="border"></input>
+                  <button className="navbarblue text-white">Submit</button>
+               </div>
+               <div className="flex justify-center">
+                  <h3>Age:&nbsp;</h3>
+                  <input className="border"></input>
+                  <button className="navbarblue text-white">Submit</button>
+               </div>
+               <div className="flex justify-center">
+                  <ICD10Search />
+               </div>
+            </div>
+            <div className="flex justify-center">
+               <div className="flex flex-col w-screen">
+                  <div className="flex">
+                     <div className="flex text-3xl mb-4">Patients</div>
+                     &nbsp; &nbsp;
+                     <button className="flex m-2">+</button>
+                  </div>
+                  <div>
+                     <DataGrid
+                        rows={rows}
+                        columns={columns}
+                        initialState={{
+                           pagination: {
+                              paginationModel: { page: 0, pageSize: 5 },
+                           },
+                        }}
+                        pageSizeOptions={[5, 10]}
+                        checkboxSelection
+                     />
+                  </div>
                </div>
             </div>
          </div>
