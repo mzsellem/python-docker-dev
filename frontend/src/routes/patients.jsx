@@ -3,6 +3,7 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
+import PatientForm from "../components/patient-form";
 import ICD10Search from "../components/icd";
 
 export default function Patients() {
@@ -65,25 +66,9 @@ export default function Patients() {
       <>
          <Navbar />
          <div className="flex flex-col">
-            <div className="flex justify-center pt-8 pb-4">
-               {" "}
-               <div className="flex justify-center">
-                  <h3>Last Name:&nbsp;</h3>
-                  <input className="border"></input>
-                  <button className="navbarblue text-white">Submit</button>
-               </div>
-               <div className="flex justify-center">
-                  <h3>First Name:&nbsp;</h3>
-                  <input className="border"></input>
-                  <button className="navbarblue text-white">Submit</button>
-               </div>
-               <div className="flex justify-center">
-                  <h3>Age:&nbsp;</h3>
-                  <input className="border"></input>
-                  <button className="navbarblue text-white">Submit</button>
-               </div>
-               <div className="flex justify-center">
-                  <ICD10Search />
+            <div>
+               <div className="flex justify-center pt-8 pb-4">
+                  <PatientForm />
                </div>
             </div>
             <div className="flex justify-center">
