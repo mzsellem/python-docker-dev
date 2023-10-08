@@ -20,13 +20,13 @@ export default function Patients() {
    }, []);
    const columns = [
       { field: "id", headerName: "ID", flex: 0.5, minWidth: 200 },
+      { field: "lastName", headerName: "Last name", flex: 0.5, minWidth: 200 },
       {
          field: "firstName",
          headerName: "First name",
          flex: 0.5,
          minWidth: 200,
       },
-      { field: "lastName", headerName: "Last name", flex: 0.5, minWidth: 200 },
       {
          field: "age",
          headerName: "Age",
