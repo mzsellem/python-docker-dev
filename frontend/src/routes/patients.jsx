@@ -50,7 +50,7 @@ export default function Patients() {
          {/* <Navbar /> */}
          <div className="flex flex-col w-full justify-between p-6">
             <div className="flex text-3xl w-full border justify-center">
-               <ICD10Search />
+               {/* <ICD10Search /> */}
             </div>
             <div className="flex flex-col w-full">
                <div className="flex">

@@ -51,7 +51,7 @@ export default function Home() {
                   </Stack>
                </div>
             </div> */}
-         <div className="flex text-3xl border justify-center">
+         <div className="flex text-3xl border justify-center rounded">
             Hello BeyondMD!
          </div>
          <div>
