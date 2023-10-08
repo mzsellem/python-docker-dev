@@ -1,9 +1,22 @@
 // import Navbar from "../components/navbar";
 import * as React from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
 // import ICD10Search from "../components/icd";
 
 export default function Patients() {
+   const [details, setDetails] = useState([]);
+
+   useEffect(() => {
+      axios
+         .get("http://localhost:8000")
+         .then((res) => {
+            const data = res.data;
+            setDetails(data);
+         })
+         .catch((err) => {});
+   }, []);
    const columns = [
       { field: "id", headerName: "ID", width: 70 },
       { field: "firstName", headerName: "First name", width: 130 },
@@ -48,6 +61,18 @@ export default function Patients() {
    return (
       <>
          {/* <Navbar /> */}
+         <div>
+            <header>Data Generated From Django PostgreSQL</header>
+            <hr />
+            {details.map((output, id) => (
+               <div key={id}>
+                  <div>
+                     <h2>{output.employee}</h2>
+                     <h3>{output.department}</h3>
+                  </div>
+               </div>
+            ))}
+         </div>
          <div className="flex flex-col w-full justify-between p-6">
             <div className="flex text-3xl w-full border justify-center">
                {/* <ICD10Search /> */}
