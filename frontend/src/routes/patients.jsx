@@ -10,7 +10,7 @@ export default function Patients() {
 
    useEffect(() => {
       axios
-         .get("http://localhost:8000")
+         .get("http://localhost:8000/api/patients")
          .then((res) => {
             console.log({ res });
             const data = res.data;
@@ -69,19 +69,20 @@ export default function Patients() {
    return (
       <>
          <Navbar />
-         {/* <div className="w-screen">
+         <div className="w-screen">
             <header>Data Generated From Django PostgreSQL</header>
             <hr />
-            {details.map((output, id) => (
+            {details.map((patient, id) => (
                <div key={id}>
                   <div>
-                     <h2>{output.last_name}</h2>
-                     <h3>{output.first_name}</h3>
-                     <h3>{output.age}</h3>
+                     <h2>{patient.last_name}</h2>
+                     <h3>{patient.first_name}</h3>
+                     <h3>{patient.age}</h3>
+                     <h3>{patient.id}</h3>
                   </div>
                </div>
             ))}
-         </div> */}
+         </div>
          <div className="flex flex-col">
             <div className="flex justify-center pt-8 pb-4">
                {" "}

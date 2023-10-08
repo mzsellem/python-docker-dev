@@ -6,7 +6,7 @@ from . models import React, Patient
 #         model = React
 #         fields = ['employee', 'department']
 
-class ReactSerializer(serializers.ModelSerializer):
+class PatientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Patient
-        fields = ['last_name', 'first_name', 'age', 'diagnosis']
+        fields = ['id','last_name', 'first_name', 'age', 'diagnosis']
