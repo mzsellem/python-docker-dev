@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import axios from "axios";
 
 export default function Form() {
+   const [details, setDetails] = useState([]);
+
    const [formData, setFormData] = useState({
       lastName: "",
       firstName: "",
@@ -24,9 +26,17 @@ export default function Form() {
       };
       e.preventDefault();
       // Handle form submission here, e.g., send data to a server
+      // axios
+      //    .post("http://localhost:8000/api/patients/", temp)
+      //    .then((res) => console.log("hello", res));
       axios
          .post("http://localhost:8000/api/patients/", temp)
-         .then((res) => console.log("hello", res));
+         .then((res) => {
+            console.log("res in post request", res);
+         })
+         .catch((err) => {
+            err;
+         });
    }
 
    return (
@@ -37,8 +47,8 @@ export default function Form() {
                <input
                   className="border"
                   type="text"
-                  name="lastname"
-                  value={formData.name}
+                  name="lastName"
+                  value={formData.lastName}
                   onChange={handleChange}
                />
             </div>
@@ -47,8 +57,8 @@ export default function Form() {
                <input
                   className="border"
                   type="text"
-                  name="firstname"
-                  value={formData.email}
+                  name="firstName"
+                  value={formData.firstName}
                   onChange={handleChange}
                />
             </div>
@@ -58,7 +68,7 @@ export default function Form() {
                   className="border"
                   type="text"
                   name="age"
-                  value={formData.email}
+                  value={formData.age}
                   onChange={handleChange}
                />
             </div>
@@ -68,7 +78,7 @@ export default function Form() {
                   className="border"
                   type="text"
                   name="diagnosis"
-                  value={formData.email}
+                  value={formData.diagnosis}
                   onChange={handleChange}
                />
             </div>
