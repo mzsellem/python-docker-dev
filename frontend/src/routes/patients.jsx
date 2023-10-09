@@ -14,12 +14,31 @@ export default function Patients() {
       axios
          .get("http://localhost:8000/api/patients")
          .then((res) => {
-            console.log({ res });
             const data = res.data;
             setDetails(data);
          })
          .catch((err) => {});
    }, []);
+
+   const handleDelete = (patientId) => {
+      axios
+         .delete(`http://localhost:8000/api/patients/${patientId}`)
+         .then((res) => {
+            // Handle success (e.g., remove the patient from the UI)
+            setDetails((prevDetails) =>
+               prevDetails.filter((patient) => patient.id !== patientId)
+            );
+            console.log("Patient removed.", res);
+         })
+         .catch((err) => {
+            console.error("Error deleting patient:", err);
+            if (err.response) {
+               // Log the server response if available
+               console.error("Server Response:", err.response.data);
+            }
+            // Handle the error, e.g., display an error message
+         });
+   };
 
    const columns = [
       { field: "id", headerName: "ID", flex: 0.5, minWidth: 200 },
@@ -39,7 +58,7 @@ export default function Patients() {
          renderCell: (params) => (
             <button
                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-               onClick={() => handleButtonClick(params.row)}
+               onClick={() => handleDelete(params.row.id)}
             >
                Delete
             </button>
@@ -54,7 +73,7 @@ export default function Patients() {
          renderCell: (params) => (
             <button
                className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded"
-               onClick={() => handleButtonClick(params.row)}
+               onClick={() => handleUpdate(params.row)}
             >
                Edit
             </button>
@@ -72,7 +91,7 @@ export default function Patients() {
          renderCell: (params) => (
             <button
                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-               onClick={() => handleButtonClick(params.row)}
+               onClick={() => handleButtonClick(params.row.id)}
             >
                Add Diagnosis
             </button>
