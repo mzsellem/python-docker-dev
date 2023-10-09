@@ -1,5 +1,6 @@
 // src/Form.js
 import React, { useState } from "react";
+import axios from "axios";
 
 export default function Form() {
    const [formData, setFormData] = useState({
@@ -15,11 +16,18 @@ export default function Form() {
       setFormData({ ...formData, [name]: value });
    };
 
-   const handleSubmit = (e) => {
+   async function handleSubmit(e, formData) {
+      console.log({ formData });
+      const temp = {
+         first_name: formData.firstName,
+         last_name: formData.lastName,
+      };
       e.preventDefault();
       // Handle form submission here, e.g., send data to a server
-      console.log(formData);
-   };
+      axios
+         .post("http://localhost:8000/api/patients/", temp)
+         .then((res) => console.log("hello", res));
+   }
 
    return (
       <form onSubmit={handleSubmit}>
