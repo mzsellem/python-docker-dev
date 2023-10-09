@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-export default function Form({ initialData }) {
-   const [formData, setFormData] = useState({ ...initialData } || {});
+export default function Form({ patientToUpdate, updatePatient }) {
+   const [formData, setFormData] = useState({ ...patientToUpdate } || {});
 
    const handleChange = (e) => {
       const { name, value } = e.target;
@@ -11,15 +11,21 @@ export default function Form({ initialData }) {
    };
 
    async function handleSubmit(e) {
-      // Handle form submission here, e.g., send data to a server
-      axios
-         .post("http://localhost:8000/api/patients/", {
-            first_name: formData.firstName,
-            last_name: formData.lastName,
-            age: formData.age,
-         })
-         .then((res) => console.log("Success!", res))
-         .catch((err) => console.log("Error!", err));
+      console.log({ formData });
+      console.log({ patientToUpdate });
+      if (patientToUpdate) {
+         updatePatient(formData);
+      } else {
+         // Handle form submission here, e.g., send data to a server
+         axios
+            .post("http://localhost:8000/api/patients/", {
+               first_name: formData.firstName,
+               last_name: formData.lastName,
+               age: formData.age,
+            })
+            .then((res) => console.log("Success!", res))
+            .catch((err) => console.log("Error!", err));
+      }
    }
 
    return (

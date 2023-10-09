@@ -48,13 +48,15 @@ export default function Patients() {
       setShowForm(true);
    };
 
-   const updatePatient = (updatedData) => {
+   const updatePatient = (updatedFormData) => {
+      console.log({ updatedFormData });
       // Send a PUT request to update the patient data
       axios
-         .put(
-            `http://localhost:8000/api/patients/${patientToUpdate.id}`,
-            updatedData
-         )
+         .put(`http://localhost:8000/api/patients/${patientToUpdate.id}/`, {
+            first_name: updatedFormData.firstName,
+            last_name: updatedFormData.lastName,
+            age: updatedFormData.age,
+         })
          .then((res) => {
             // Handle success (e.g., update the patient data in the UI)
             console.log("Success!", res);
@@ -62,7 +64,7 @@ export default function Patients() {
             setDetails((prevDetails) =>
                prevDetails.map((patient) =>
                   patient.id === patientToUpdate.id
-                     ? { ...patient, ...updatedData }
+                     ? { ...patient, ...updatedFormData }
                      : patient
                )
             );
@@ -87,6 +89,12 @@ export default function Patients() {
       {
          field: "firstName",
          headerName: "First name",
+         flex: 0.5,
+         minWidth: 200,
+      },
+      {
+         field: "age",
+         headerName: "Age",
          flex: 0.5,
          minWidth: 200,
       },
@@ -159,8 +167,8 @@ export default function Patients() {
                <div className="flex justify-center pt-8 pb-4">
                   {showForm && (
                      <PatientForm
-                        onSubmit={updatePatient} // Pass the updatePatient function to the form component
-                        initialData={patientToUpdate} // Pass the patient data for editing
+                        updatePatient={updatePatient} // Pass the updatePatient function to the form component
+                        patientToUpdate={patientToUpdate} // Pass the patient data for editing
                      />
                   )}
                </div>
