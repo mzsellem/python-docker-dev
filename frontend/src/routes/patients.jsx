@@ -30,11 +30,34 @@ export default function Patients() {
          minWidth: 200,
       },
       {
-         field: "age",
-         headerName: "Age",
+         field: "delete",
+         headerName: "",
          type: "number",
          flex: 0.5,
          minWidth: 200,
+         renderCell: (params) => (
+            <button
+               className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+               onClick={() => handleButtonClick(params.row)}
+            >
+               Delete
+            </button>
+         ),
+      },
+      {
+         field: "edit",
+         headerName: "",
+         type: "number",
+         flex: 0.5,
+         minWidth: 200,
+         renderCell: (params) => (
+            <button
+               className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded"
+               onClick={() => handleButtonClick(params.row)}
+            >
+               Edit
+            </button>
+         ),
       },
       {
          field: "diagnosis",
