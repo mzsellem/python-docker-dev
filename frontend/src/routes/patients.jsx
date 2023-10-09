@@ -8,6 +8,7 @@ import ICD10Search from "../components/icd";
 
 export default function Patients() {
    const [details, setDetails] = useState([]);
+   const [showForm, setShowForm] = useState(false);
 
    useEffect(() => {
       axios
@@ -62,13 +63,19 @@ export default function Patients() {
       age: patient.age,
    }));
 
+   // Define your rows and columns here
+
+   const toggleForm = () => {
+      setShowForm(!showForm);
+   };
+
    return (
       <>
          <Navbar />
          <div className="flex flex-col">
             <div>
                <div className="flex justify-center pt-8 pb-4">
-                  <PatientForm />
+                  {showForm && <PatientForm />}
                </div>
             </div>
             <div className="flex justify-center">
@@ -76,7 +83,12 @@ export default function Patients() {
                   <div className="flex">
                      <div className="flex text-3xl mb-4">Patients</div>
                      &nbsp; &nbsp;
-                     <button className="flex m-2">+</button>
+                     <button
+                        className="flex m-2 navbarblue h-1/2 w-5 justify-center rounded text-white"
+                        onClick={toggleForm}
+                     >
+                        {showForm ? "-" : "+"}
+                     </button>
                   </div>
                   <div>
                      <DataGrid
