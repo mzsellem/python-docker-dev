@@ -9,6 +9,7 @@ import ICD10Search from "../components/icd";
 export default function Patients() {
    const [details, setDetails] = useState([]);
    const [showForm, setShowForm] = useState(false);
+   const [patientToUpdate, setPatientToUpdate] = useState(null); // State to store the patient data for editing
 
    useEffect(() => {
       axios
@@ -32,6 +33,46 @@ export default function Patients() {
          })
          .catch((err) => {
             console.error("Error deleting patient:", err);
+            if (err.response) {
+               // Log the server response if available
+               console.error("Server Response:", err.response.data);
+            }
+            // Handle the error, e.g., display an error message
+         });
+   };
+
+   const handleUpdate = (patient) => {
+      // Set the patient data to be updated in the state
+      setPatientToUpdate(patient);
+      // Show the form for editing
+      setShowForm(true);
+   };
+
+   const updatePatient = (updatedData) => {
+      // Send a PUT request to update the patient data
+      axios
+         .put(
+            `http://localhost:8000/api/patients/${patientToUpdate.id}`,
+            updatedData
+         )
+         .then((res) => {
+            // Handle success (e.g., update the patient data in the UI)
+            console.log("Success!", res);
+            // Here, you can update the patient data in 'details' state with the updatedData
+            setDetails((prevDetails) =>
+               prevDetails.map((patient) =>
+                  patient.id === patientToUpdate.id
+                     ? { ...patient, ...updatedData }
+                     : patient
+               )
+            );
+            // Clear the patientToUpdate state and hide the form
+            setPatientToUpdate(null);
+            setShowForm(false);
+            console.log("Patient updated.", res);
+         })
+         .catch((err) => {
+            console.error("Error updating patient:", err);
             if (err.response) {
                // Log the server response if available
                console.error("Server Response:", err.response.data);
@@ -116,7 +157,12 @@ export default function Patients() {
          <div className="flex flex-col">
             <div>
                <div className="flex justify-center pt-8 pb-4">
-                  {showForm && <PatientForm />}
+                  {showForm && (
+                     <PatientForm
+                        onSubmit={updatePatient} // Pass the updatePatient function to the form component
+                        initialData={patientToUpdate} // Pass the patient data for editing
+                     />
+                  )}
                </div>
             </div>
             <div className="flex justify-center">

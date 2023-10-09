@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-export default function Form() {
+export default function Form({ initialData }) {
    const [formData, setFormData] = useState({
       lastName: "",
       firstName: "",
@@ -36,7 +36,7 @@ export default function Form() {
                   className="border"
                   type="text"
                   name="lastName"
-                  value={formData.lastName}
+                  value={initialData ? initialData.lastName : formData.lastName}
                   onChange={handleChange}
                />
             </div>
@@ -46,7 +46,9 @@ export default function Form() {
                   className="border"
                   type="text"
                   name="firstName"
-                  value={formData.firstName}
+                  value={
+                     initialData ? initialData.firstName : formData.firstName
+                  }
                   onChange={handleChange}
                />
             </div>
@@ -56,7 +58,7 @@ export default function Form() {
                   className="border"
                   type="text"
                   name="age"
-                  value={formData.age}
+                  value={initialData ? initialData.age : formData.age}
                   onChange={handleChange}
                />
             </div>
@@ -66,7 +68,9 @@ export default function Form() {
                   className="border"
                   type="text"
                   name="diagnosis"
-                  value={formData.diagnosis}
+                  value={
+                     initialData ? initialData.diagnosis : formData.diagnosis
+                  }
                   onChange={handleChange}
                />
             </div>
