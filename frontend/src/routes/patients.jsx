@@ -20,6 +20,7 @@ export default function Patients() {
          })
          .catch((err) => {});
    }, []);
+
    const columns = [
       { field: "id", headerName: "ID", flex: 0.5, minWidth: 200 },
       { field: "lastName", headerName: "Last name", flex: 0.5, minWidth: 200 },
@@ -85,8 +86,6 @@ export default function Patients() {
       firstName: patient.first_name,
       age: patient.age,
    }));
-
-   // Define your rows and columns here
 
    const toggleForm = () => {
       setShowForm(!showForm);

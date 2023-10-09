@@ -3,14 +3,11 @@ import React, { useState } from "react";
 import axios from "axios";
 
 export default function Form() {
-   const [details, setDetails] = useState([]);
-
    const [formData, setFormData] = useState({
       lastName: "",
       firstName: "",
       age: "",
       diagnosis: "",
-      // Add more form fields as needed
    });
 
    const handleChange = (e) => {
@@ -18,25 +15,16 @@ export default function Form() {
       setFormData({ ...formData, [name]: value });
    };
 
-   async function handleSubmit(e, formData) {
-      console.log({ formData });
-      const temp = {
-         first_name: formData.firstName,
-         last_name: formData.lastName,
-      };
-      e.preventDefault();
+   async function handleSubmit(e) {
       // Handle form submission here, e.g., send data to a server
-      // axios
-      //    .post("http://localhost:8000/api/patients/", temp)
-      //    .then((res) => console.log("hello", res));
       axios
-         .post("http://localhost:8000/api/patients/", temp)
-         .then((res) => {
-            console.log("res in post request", res);
+         .post("http://localhost:8000/api/patients/", {
+            first_name: formData.firstName,
+            last_name: formData.lastName,
+            age: formData.age,
          })
-         .catch((err) => {
-            err;
-         });
+         .then((res) => console.log("Success!", res))
+         .catch((err) => console.log("Error!", err));
    }
 
    return (
