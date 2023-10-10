@@ -185,6 +185,9 @@ export default function Patients() {
                         {showForm ? "-" : "+"}
                      </button>
                   </div>
+
+                  <ICD10Search />
+
                   <div>
                      <DataGrid
                         rows={rows}

@@ -1,24 +1,17 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const ICD10Search = () => {
+export default function ICD10Search() {
    const [searchTerm, setSearchTerm] = useState("");
    const [results, setResults] = useState([]);
 
    const handleSearch = async () => {
       try {
          const response = await axios.get(
-            "https://clinicaltables.nlm.nih.gov/api/icd10cm/v3/search?df=code,name",
-            {
-               params: {
-                  sf: "code,name",
-                  df: "code,name",
-                  terms: searchTerm, // Pass the search term here
-               },
-            }
+            "https://clinicaltables.nlm.nih.gov/api/icd10cm/v3/search?sf=code,name&terms"
          );
          console.log({ response });
-         setResults(response.data.results);
+         setResults(response.data[3]);
       } catch (error) {
          console.error("Error fetching data:", error);
       }
@@ -45,15 +38,16 @@ const ICD10Search = () => {
             </div>
 
             <ul>
-               {results.map((result) => (
-                  <li key={result.code}>
-                     {result.code} - {result.name}
-                  </li>
-               ))}
+               {results.map((result) => {
+                  console.log({ result });
+                  return (
+                     <li key={result[0]}>
+                        {result[0]} - {result[1]}
+                     </li>
+                  );
+               })}
             </ul>
          </div>
       </>
    );
-};
-
-export default ICD10Search;
+}
