@@ -8,7 +8,7 @@ export default function ICD10Search() {
    const handleSearch = async () => {
       try {
          const response = await axios.get(
-            "https://clinicaltables.nlm.nih.gov/api/icd10cm/v3/search?sf=code,name&terms"
+            `https://clinicaltables.nlm.nih.gov/api/icd10cm/v3/search?sf=code,name&terms=${searchTerm}`
          );
          console.log({ response });
          setResults(response.data[3]);
