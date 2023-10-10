@@ -10,6 +10,17 @@ export default function Patients() {
    const [details, setDetails] = useState([]);
    const [showForm, setShowForm] = useState(false);
    const [patientToUpdate, setPatientToUpdate] = useState(null); // State to store the patient data for editing
+   const [selectedPatient, setSelectedPatient] = useState(null);
+   const [selectedDiagnosis, setSelectedDiagnosis] = useState(null);
+
+   // Handle the "Add Diagnosis" button click
+   //click assigns patientID
+   const handleDiagnosisButtonClick = (patient) => {
+      console.log({ patient });
+      // Set the selected patient ID
+      setSelectedPatient(patient.id);
+      setPatientToUpdate(patient);
+   };
 
    useEffect(() => {
       axios
@@ -41,7 +52,7 @@ export default function Patients() {
          });
    };
 
-   const handleUpdate = (patient) => {
+   const handleEdit = (patient) => {
       // Set the patient data to be updated in the state
       setPatientToUpdate(patient);
       // Show the form for editing
@@ -122,7 +133,7 @@ export default function Patients() {
          renderCell: (params) => (
             <button
                className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded"
-               onClick={() => handleUpdate(params.row)}
+               onClick={() => handleEdit(params.row)}
             >
                Edit
             </button>
@@ -140,7 +151,7 @@ export default function Patients() {
          renderCell: (params) => (
             <button
                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-               onClick={() => handleClick(params.row.id)}
+               onClick={() => handleDiagnosisButtonClick(params.row)}
             >
                Add Diagnosis
             </button>
@@ -153,6 +164,7 @@ export default function Patients() {
       lastName: patient.last_name,
       firstName: patient.first_name,
       age: patient.age,
+      diagnosis: patient.diagnosis,
    }));
 
    const toggleForm = () => {
@@ -207,7 +219,14 @@ export default function Patients() {
                </div>
             </div>
             <div className="flex w-1/3">
-               <ICD10Search />
+               <ICD10Search
+                  selectedDiagnosis={selectedDiagnosis}
+                  setSelectedDiagnosis={setSelectedDiagnosis}
+                  patientId={selectedPatient}
+                  setSelectedPatient={setSelectedPatient}
+                  patientInfo={patientToUpdate}
+                  setDetails={setDetails}
+               />
             </div>
          </div>
       </>

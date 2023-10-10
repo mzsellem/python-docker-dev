@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import {
    Table,
@@ -10,9 +10,60 @@ import {
    Paper,
 } from "@mui/material";
 
-export default function ICD10Search() {
+export default function ICD10Search({
+   selectedDiagnosis,
+   setSelectedDiagnosis,
+   patientId,
+   setSelectedPatient,
+   patientInfo,
+   setDetails,
+}) {
    const [searchTerm, setSearchTerm] = useState("");
    const [results, setResults] = useState([]);
+
+   // Handle the selection of a diagnosis
+   const handleDiagnosisSelection = (code, description) => {
+      console.log({ description });
+      setSelectedDiagnosis(code, description);
+   };
+
+   useEffect(() => {
+      if (selectedDiagnosis) {
+         console.log({ patientInfo });
+         console.log("heyo");
+         // Send a PUT request to update the patient's diagnosis
+         axios
+            .put(`http://localhost:8000/api/patients/${patientId}/`, {
+               diagnosis: selectedDiagnosis,
+               age: patientInfo.age,
+               last_name: patientInfo.lastName,
+               first_name: patientInfo.firstName,
+            })
+            .then((res) => {
+               // Handle success (e.g., update the patient data in the UI)
+               console.log("Diagnosis added.", res);
+               // You can update the patient data in 'details' state with the updated diagnosis
+               setDetails((prevDetails) =>
+                  prevDetails.map((patient) =>
+                     patient.id === patientId
+                        ? { ...patient, diagnosis: selectedDiagnosis }
+                        : patient
+                  )
+               );
+               // Clear the selected patient and diagnosis
+               setSelectedPatient(null);
+               setSelectedDiagnosis(null);
+            })
+            .catch((err) => {
+               console.error("Error adding diagnosis:", err);
+               if (err.response) {
+                  // Log the server response if available
+                  console.error("Server Response:", err.response.data);
+               }
+               // Handle the error, e.g., display an error message
+            });
+      }
+   }, [selectedDiagnosis, patientId]);
 
    const handleSearch = async () => {
       try {
@@ -63,6 +114,19 @@ export default function ICD10Search() {
                            <TableRow key={result[0]}>
                               <TableCell>{result[0]}</TableCell>
                               <TableCell>{result[1]}</TableCell>
+                              <TableCell>
+                                 <button
+                                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                    onClick={() =>
+                                       handleDiagnosisSelection(
+                                          result[0],
+                                          result[1]
+                                       )
+                                    }
+                                 >
+                                    Select
+                                 </button>
+                              </TableCell>
                            </TableRow>
                         ))}
                      </TableBody>
