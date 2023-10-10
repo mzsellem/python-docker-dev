@@ -148,14 +148,20 @@ export default function Patients() {
          minWidth: 150,
          // valueGetter: (params) =>
          //    `${params.row.firstName || ""} ${params.row.lastName || ""}`,
-         renderCell: (params) => (
-            <button
-               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-               onClick={() => handleDiagnosisButtonClick(params.row)}
-            >
-               Add Diagnosis
-            </button>
-         ),
+         renderCell: (params) => {
+            if (params.row.diagnosis) {
+               return <div>{params.row.diagnosis}</div>;
+            } else {
+               return (
+                  <button
+                     className="bg-blue-500 hover-bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                     onClick={() => handleDiagnosisButtonClick(params.row)}
+                  >
+                     Add Diagnosis
+                  </button>
+               );
+            }
+         },
       },
    ];
 
