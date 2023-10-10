@@ -10,13 +10,6 @@ export default function Patients() {
    const [details, setDetails] = useState([]);
    const [showForm, setShowForm] = useState(false);
    const [patientToUpdate, setPatientToUpdate] = useState(null); // State to store the patient data for editing
-   const [showICD10Search, setShowICD10Search] = useState(false);
-
-   const handleClick = () => {
-      console.log({ showICD10Search });
-      // Toggle the state variable when the button is clicked
-      setShowICD10Search(!showICD10Search);
-   };
 
    useEffect(() => {
       axios
@@ -91,26 +84,26 @@ export default function Patients() {
    };
 
    const columns = [
-      { field: "id", headerName: "ID", flex: 0.5, minWidth: 200 },
-      { field: "lastName", headerName: "Last name", flex: 0.5, minWidth: 200 },
+      { field: "id", headerName: "ID", flex: 0.5, minWidth: 150 },
+      { field: "lastName", headerName: "Last name", flex: 0.5, minWidth: 150 },
       {
          field: "firstName",
          headerName: "First name",
          flex: 0.5,
-         minWidth: 200,
+         minWidth: 150,
       },
       {
          field: "age",
          headerName: "Age",
          flex: 0.5,
-         minWidth: 200,
+         minWidth: 100,
       },
       {
          field: "delete",
          headerName: "",
          type: "number",
          flex: 0.5,
-         minWidth: 200,
+         minWidth: 100,
          renderCell: (params) => (
             <button
                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
@@ -125,7 +118,7 @@ export default function Patients() {
          headerName: "",
          type: "number",
          flex: 0.5,
-         minWidth: 200,
+         minWidth: 100,
          renderCell: (params) => (
             <button
                className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded"
@@ -141,7 +134,7 @@ export default function Patients() {
          description: "This column has a value getter and is not sortable.",
          sortable: false,
          flex: 0.5,
-         minWidth: 200,
+         minWidth: 150,
          // valueGetter: (params) =>
          //    `${params.row.firstName || ""} ${params.row.lastName || ""}`,
          renderCell: (params) => (
@@ -180,11 +173,13 @@ export default function Patients() {
                   )}
                </div>
             </div>
-            <div className="flex justify-center">
-               <div className="flex flex-col w-screen">
+         </div>
+         <div className="flex justify-center">
+            <div className="flex flex-col w-screen">
+               <div className="flex w-screen">
+                  <div className="flex text-3xl mb-4">Patients</div>
+                  &nbsp; &nbsp;
                   <div className="flex">
-                     <div className="flex text-3xl mb-4">Patients</div>
-                     &nbsp; &nbsp;
                      <button
                         className="flex m-2 navbarblue h-1/2 w-5 justify-center rounded text-white"
                         onClick={toggleForm}
@@ -192,23 +187,27 @@ export default function Patients() {
                         {showForm ? "-" : "+"}
                      </button>
                   </div>
-
-                  {showICD10Search && <ICD10Search />}
-
-                  <div>
-                     <DataGrid
-                        rows={rows}
-                        columns={columns}
-                        initialState={{
-                           pagination: {
-                              paginationModel: { page: 0, pageSize: 5 },
-                           },
-                        }}
-                        pageSizeOptions={[5, 10]}
-                        checkboxSelection
-                     />
-                  </div>
                </div>
+            </div>
+         </div>
+         <div className="flex w-screen">
+            <div className="flex w-2/3">
+               <div>
+                  <DataGrid
+                     rows={rows}
+                     columns={columns}
+                     initialState={{
+                        pagination: {
+                           paginationModel: { page: 0, pageSize: 5 },
+                        },
+                     }}
+                     pageSizeOptions={[5, 10]}
+                     checkboxSelection
+                  />
+               </div>
+            </div>
+            <div className="flex w-1/3">
+               <ICD10Search />
             </div>
          </div>
       </>
