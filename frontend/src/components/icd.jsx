@@ -1,59 +1,80 @@
+// src/Form.js
 import React, { useState } from "react";
 import axios from "axios";
 
-const ICD10Search = () => {
-   const [searchTerm, setSearchTerm] = useState("");
-   const [results, setResults] = useState([]);
+export default function Form({ patientToUpdate, updatePatient }) {
+   const [formData, setFormData] = useState({ ...patientToUpdate } || {});
 
-   const handleSearch = async () => {
-      try {
-         const response = await axios.get(
-            "https://clinicaltables.nlm.nih.gov/api/icd10cm/v3/search?df=code,name",
-            {
-               params: {
-                  sf: "code,name",
-                  df: "code,name",
-                  terms: searchTerm, // Pass the search term here
-               },
-            }
-         );
-         console.log({ response });
-         setResults(response.data.results);
-      } catch (error) {
-         console.error("Error fetching data:", error);
-      }
+   const handleChange = (e) => {
+      const { name, value } = e.target;
+      setFormData({ ...formData, [name]: value });
    };
 
+   async function handleSubmit(e) {
+      console.log({ formData });
+      console.log({ patientToUpdate });
+      if (patientToUpdate) {
+         updatePatient(formData);
+      } else {
+         // Handle form submission here, e.g., send data to a server
+         axios
+            .post("http://localhost:8000/api/patients/", {
+               first_name: formData.firstName,
+               last_name: formData.lastName,
+               age: formData.age,
+            })
+            .then((res) => console.log("Success!", res))
+            .catch((err) => console.log("Error!", err));
+      }
+   }
+
    return (
-      <>
-         <div className="flex flex-row">
-            <div className="flex mb-4">ICD-10 Code Search</div>
-            <div className="flex">
+      <form onSubmit={handleSubmit}>
+         <div className="flex items-center space-x-4">
+            <div>
+               <label>Last Name:&nbsp;</label>
                <input
-                  className="border rounded-lg"
+                  className="border"
                   type="text"
-                  placeholder="Enter search term"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleChange}
                />
-               <button
-                  className="ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-2xl p-2"
-                  onClick={handleSearch}
-               >
-                  Search
-               </button>
             </div>
-
-            <ul>
-               {results.map((result) => (
-                  <li key={result.code}>
-                     {result.code} - {result.name}
-                  </li>
-               ))}
-            </ul>
+            <div>
+               <label>First Name:&nbsp;</label>
+               <input
+                  className="border"
+                  type="text"
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleChange}
+               />
+            </div>
+            <div>
+               <label>Age:&nbsp;</label>
+               <input
+                  className="border"
+                  type="text"
+                  name="age"
+                  value={formData.age}
+                  onChange={handleChange}
+               />
+            </div>
+            <div>
+               <label>Diagnosis:&nbsp;</label>
+               <input
+                  className="border"
+                  type="text"
+                  name="diagnosis"
+                  value={formData.diagnosis}
+                  onChange={handleChange}
+               />
+            </div>
+            <button className="navbarblue rounded text-white p-2" type="submit">
+               Submit
+            </button>
          </div>
-      </>
+      </form>
    );
-};
-
-export default ICD10Search;
+}
