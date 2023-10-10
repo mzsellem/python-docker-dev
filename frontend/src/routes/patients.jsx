@@ -10,6 +10,13 @@ export default function Patients() {
    const [details, setDetails] = useState([]);
    const [showForm, setShowForm] = useState(false);
    const [patientToUpdate, setPatientToUpdate] = useState(null); // State to store the patient data for editing
+   const [showICD10Search, setShowICD10Search] = useState(false);
+
+   const handleClick = () => {
+      console.log({ showICD10Search });
+      // Toggle the state variable when the button is clicked
+      setShowICD10Search(!showICD10Search);
+   };
 
    useEffect(() => {
       axios
@@ -140,7 +147,7 @@ export default function Patients() {
          renderCell: (params) => (
             <button
                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-               onClick={() => handleButtonClick(params.row.id)}
+               onClick={() => handleClick(params.row.id)}
             >
                Add Diagnosis
             </button>
@@ -186,7 +193,7 @@ export default function Patients() {
                      </button>
                   </div>
 
-                  <ICD10Search />
+                  {showICD10Search && <ICD10Search />}
 
                   <div>
                      <DataGrid
