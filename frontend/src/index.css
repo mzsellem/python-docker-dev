@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/* For Buttons */
 .navbarblue {
   background-color: #3b82f6;
+}
+
+/* Footer */
+.center {
+  display: flex;
+  justify-content: center;
 }
