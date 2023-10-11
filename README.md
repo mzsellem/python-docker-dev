@@ -19,7 +19,7 @@ The concept for my app is a basic patient chart. A medical provider can create, 
 ## Run this app locally
 
 -  Dependencies Needed:
-   -  python3, pip, docker, npm
+   -  python3, pip, npm, docker
 -  Frontend:
    -  navigate to `frontend/`
    -  `npm install`
