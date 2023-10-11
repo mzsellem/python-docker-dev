@@ -27,6 +27,4 @@ router.register(r"patients", views.PatientView, 'patient')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/',include(router.urls)),
-    # path('patients/',patients,name="patients"),
-    # path('', include('app.urls')),
 ]
