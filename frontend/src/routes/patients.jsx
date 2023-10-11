@@ -159,6 +159,9 @@ export default function Patients() {
          });
    };
 
+   useEffect(() => {
+      console.log({ patientToUpdate });
+   }, [patientToUpdate]);
    // If the Edit button is clicked, set the patient to update and show the form
    const handleEdit = (patient) => {
       setPatientToUpdate(patient);
@@ -170,10 +173,6 @@ export default function Patients() {
       setSelectedPatient(patient.id);
       // Set the selected patient data
       setPatientToUpdate(patient);
-   };
-
-   const toggleForm = () => {
-      setShowForm(!showForm);
    };
 
    return (
@@ -199,7 +198,9 @@ export default function Patients() {
                   <div className="flex">
                      <button
                         className="flex m-2 navbarblue h-1/2 w-5 justify-center rounded text-white"
-                        onClick={toggleForm}
+                        onClick={() => {
+                           setShowForm(!showForm);
+                        }}
                      >
                         {showForm ? "-" : "+"}
                      </button>
@@ -220,7 +221,6 @@ export default function Patients() {
                         },
                      }}
                      pageSizeOptions={[5, 10]}
-                     checkboxSelection
                      onSortModelChange={(newSortModel) =>
                         setSortModel(newSortModel)
                      }
