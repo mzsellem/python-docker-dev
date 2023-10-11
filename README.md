@@ -16,10 +16,17 @@ The concept for my app is a basic patient chart. A medical provider can create, 
 -  MUI
 -  Canva
 
-# Getting Started:
+## Run this app locally
 
-To run this app locally:
-
--  Frontend: npm run dev
--  Backend: python3 manage.py runserver
--  Docker: docker compose up --build
+-  Dependencies Needed:
+   -  python3, pip, docker, npm
+-  Frontend:
+   -  navigate to `frontend/`
+   -  `npm install`
+   -  `npm run dev`
+-  Backend:
+   -  navigate to `backend/`
+   -  `python3 manage.py runserver`
+-  Docker:
+   -  `pip install`
+   -  `docker compose up --build`
