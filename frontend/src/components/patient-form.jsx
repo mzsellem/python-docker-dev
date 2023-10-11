@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import axios from "axios";
 
 export default function Form({ patientToUpdate, updatePatient }) {
+   //If patient needs to be updated, prefill form with selected patient
    const [formData, setFormData] = useState({ ...patientToUpdate } || {});
 
    const handleChange = (e) => {
@@ -10,12 +11,11 @@ export default function Form({ patientToUpdate, updatePatient }) {
       setFormData({ ...formData, [name]: value });
    };
 
-   //Handle both create and update in one form: ppdate the patient, otherwise create a new patient
+   //Handle both create and update in one form: update the patient, otherwise create a new patient
    function handleSubmit(e) {
       if (patientToUpdate) {
          updatePatient(formData);
       } else {
-         // Handle form submission here, send data to a server
          axios
             .post("http://localhost:8000/api/patients/", {
                //Reformat data: snake to camel case because of django backend and js frontend

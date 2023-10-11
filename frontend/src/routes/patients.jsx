@@ -8,11 +8,11 @@ import ICD10Search from "../components/icd";
 
 export default function Patients() {
    const [details, setDetails] = useState([]); // State to store the patient data
-   const [showForm, setShowForm] = useState(false); // State to track if form is shown or hidden
+   const [showForm, setShowForm] = useState(false);
    const [patientToUpdate, setPatientToUpdate] = useState(null); // State to store the patient data for editing
    const [selectedPatient, setSelectedPatient] = useState(null); // State to store the patient data for diagnosis
-   const [selectedDiagnosis, setSelectedDiagnosis] = useState(null); // State to store selected diagnosis
-   const [isEditing, setIsEditing] = useState(false); // State to track if we are editing
+   const [selectedDiagnosis, setSelectedDiagnosis] = useState(null);
+   const [isEditing, setIsEditing] = useState(false);
 
    const columns = [
       { field: "id", headerName: "ID", flex: 0.5, minWidth: 150 },
@@ -108,7 +108,6 @@ export default function Patients() {
    //Delete a patient
    const handleDelete = (patientId) => {
       axios
-         //Send a delete request to remove a patient data from the database
          .delete(`http://localhost:8000/api/patients/${patientId}`)
          .then((res) => {
             // Delete the patient from the frontend and display remaining patients
@@ -120,7 +119,6 @@ export default function Patients() {
          .catch((err) => {
             console.error("Error deleting patient:", err);
             if (err.response) {
-               // Log the server response if available
                console.error("Server Response:", err.response.data);
             }
          });
@@ -129,7 +127,6 @@ export default function Patients() {
    // Update a patient
    const updatePatient = (updatedFormData) => {
       axios
-         // Send a PUT request to update the patient data in the database
          .put(`http://localhost:8000/api/patients/${patientToUpdate.id}/`, {
             //Reformat data: snake to camel case because of django backend and js frontend
             first_name: updatedFormData.firstName,
@@ -137,9 +134,7 @@ export default function Patients() {
             age: updatedFormData.age,
          })
          .then((res) => {
-            // Update the patient data on the frontend
-            console.log("Success!", res);
-            // Update the patient data in 'details' state with the updatedFormData
+            // Update the patient data on the frontend with the updatedFormData
             setDetails((prevDetails) =>
                prevDetails.map((patient) =>
                   patient.id === patientToUpdate.id
@@ -151,12 +146,10 @@ export default function Patients() {
             setPatientToUpdate(null);
             setIsEditing(false); // Set back to non-editing mode
             setShowForm(false);
-            console.log("Patient updated.", res);
          })
          .catch((err) => {
             console.error("Error updating patient:", err);
             if (err.response) {
-               // Log the server response if available
                console.error("Server Response:", err.response.data);
             }
          });
@@ -169,9 +162,7 @@ export default function Patients() {
       setShowForm(true);
    };
 
-   // Handle the "Add Diagnosis" button click
    const handleDiagnosisButtonClick = (patient) => {
-      // Set the selected patient ID
       setSelectedPatient(patient.id);
       // Set the selected patient data
       setPatientToUpdate(patient);
@@ -189,8 +180,8 @@ export default function Patients() {
                <div className="flex justify-center pt-8 pb-4">
                   {showForm && (
                      <PatientForm
-                        updatePatient={updatePatient} // Pass the updatePatient function to the form component
-                        patientToUpdate={patientToUpdate} // Pass the patient data for editing to the form component
+                        updatePatient={updatePatient}
+                        patientToUpdate={patientToUpdate}
                      />
                   )}
                </div>
@@ -230,7 +221,6 @@ export default function Patients() {
             </div>
             <div className="flex w-1/3">
                <ICD10Search
-                  //Pass all of this data to the form component
                   selectedDiagnosis={selectedDiagnosis}
                   setSelectedDiagnosis={setSelectedDiagnosis}
                   patientId={selectedPatient}

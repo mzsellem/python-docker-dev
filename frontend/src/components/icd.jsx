@@ -19,14 +19,11 @@ export default function ICD10Search({
    patientInfo,
    setDetails,
 }) {
-   const [searchTerm, setSearchTerm] = useState(""); // State to store the searchTerm
-   const [results, setResults] = useState([]); // State to store the results of search
-   const [showResults, setShowResults] = useState(true);
+   const [searchTerm, setSearchTerm] = useState("");
+   const [results, setResults] = useState([]); // State to store the results of diagnosis search
 
-   // Handle the selection of a diagnosis
    const handleDiagnosisSelection = (code, description) => {
       setSelectedDiagnosis(code, description);
-      setShowResults(false); // Hide the results
    };
 
    useEffect(() => {
@@ -34,7 +31,6 @@ export default function ICD10Search({
          // Send a PUT request to update the patient's diagnosis
          axios
             .put(`http://localhost:8000/api/patients/${patientId}/`, {
-               //payload
                diagnosis: selectedDiagnosis,
                //Reformat data: snake to camel case because of django backend and js frontend
                age: patientInfo.age,
@@ -55,10 +51,8 @@ export default function ICD10Search({
                setSelectedDiagnosis(null);
             })
             .catch((err) => {
-               // Handle the error
                console.error("Error adding diagnosis:", err);
                if (err.response) {
-                  // Log the server response if available
                   console.error("Server Response:", err.response.data);
                }
             });
