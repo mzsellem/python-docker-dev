@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 
 export default function ICD10Search({
+   //Pass this data from patients.jsx as props to use in icd.jsx
    selectedDiagnosis,
    setSelectedDiagnosis,
    patientId,
@@ -18,12 +19,14 @@ export default function ICD10Search({
    patientInfo,
    setDetails,
 }) {
-   const [searchTerm, setSearchTerm] = useState("");
-   const [results, setResults] = useState([]);
+   const [searchTerm, setSearchTerm] = useState(""); // State to store the searchTerm
+   const [results, setResults] = useState([]); // State to store the results of search
+   const [showResults, setShowResults] = useState(true);
 
    // Handle the selection of a diagnosis
    const handleDiagnosisSelection = (code, description) => {
       setSelectedDiagnosis(code, description);
+      setShowResults(false); // Hide the results
    };
 
    useEffect(() => {
