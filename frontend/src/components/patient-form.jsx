@@ -72,7 +72,7 @@ export default function Form({ patientToUpdate, updatePatient }) {
                />
             </div>
             <button className="navbarblue rounded text-white p-2" type="submit">
-               Submit
+               Save
             </button>
          </div>
       </form>
