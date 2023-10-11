@@ -6,8 +6,6 @@ import { pageNavigationPlugin } from "@react-pdf-viewer/page-navigation";
 import "@react-pdf-viewer/page-navigation/lib/styles/index.css";
 
 import * as React from "react";
-// import Pagination from "@mui/material/Pagination";
-// import Stack from "@mui/material/Stack";
 
 export default function Home() {
    const pageNavigationPluginInstance = pageNavigationPlugin();
