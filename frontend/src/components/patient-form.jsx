@@ -67,8 +67,8 @@ export default function Form({ patientToUpdate, updatePatient }) {
                   className="border"
                   type="text"
                   name="diagnosis"
-                  value={formData.diagnosis}
-                  // onChange={handleChange}
+                  value=""
+                  readOnly
                />
             </div>
             <button className="navbarblue rounded text-white p-2" type="submit">
