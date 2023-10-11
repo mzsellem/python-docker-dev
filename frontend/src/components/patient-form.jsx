@@ -10,13 +10,15 @@ export default function Form({ patientToUpdate, updatePatient }) {
       setFormData({ ...formData, [name]: value });
    };
 
+   //Handle both create and update in one form: ppdate the patient, otherwise create a new patient
    async function handleSubmit(e) {
       if (patientToUpdate) {
          updatePatient(formData);
       } else {
-         // Handle form submission here, e.g., send data to a server
+         // Handle form submission here, send data to a server
          axios
             .post("http://localhost:8000/api/patients/", {
+               //Reformat data: snake to camel case because of django backend and js frontend
                first_name: formData.firstName,
                last_name: formData.lastName,
                age: formData.age,

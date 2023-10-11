@@ -33,7 +33,7 @@ export default function ICD10Search({
             .put(`http://localhost:8000/api/patients/${patientId}/`, {
                //payload
                diagnosis: selectedDiagnosis,
-               //snake to camel case because of django backend and js frontend
+               //Reformat data: snake to camel case because of django backend and js frontend
                age: patientInfo.age,
                last_name: patientInfo.lastName,
                first_name: patientInfo.firstName,
