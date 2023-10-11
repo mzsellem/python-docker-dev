@@ -11,8 +11,6 @@ export default function Form({ patientToUpdate, updatePatient }) {
    };
 
    async function handleSubmit(e) {
-      console.log({ formData });
-      console.log({ patientToUpdate });
       if (patientToUpdate) {
          updatePatient(formData);
       } else {

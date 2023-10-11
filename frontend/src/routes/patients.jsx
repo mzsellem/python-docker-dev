@@ -17,7 +17,6 @@ export default function Patients() {
    // Handle the "Add Diagnosis" button click
    //click assigns patientID
    const handleDiagnosisButtonClick = (patient) => {
-      console.log({ patient });
       // Set the selected patient ID
       setSelectedPatient(patient.id);
       setPatientToUpdate(patient);
@@ -61,7 +60,6 @@ export default function Patients() {
    };
 
    const updatePatient = (updatedFormData) => {
-      console.log({ updatedFormData });
       // Send a PUT request to update the patient data
       axios
          .put(`http://localhost:8000/api/patients/${patientToUpdate.id}/`, {

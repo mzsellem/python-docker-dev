@@ -23,14 +23,11 @@ export default function ICD10Search({
 
    // Handle the selection of a diagnosis
    const handleDiagnosisSelection = (code, description) => {
-      console.log({ description });
       setSelectedDiagnosis(code, description);
    };
 
    useEffect(() => {
       if (selectedDiagnosis) {
-         console.log({ patientInfo });
-         console.log("heyo");
          // Send a PUT request to update the patient's diagnosis
          axios
             .put(`http://localhost:8000/api/patients/${patientId}/`, {
@@ -41,7 +38,6 @@ export default function ICD10Search({
             })
             .then((res) => {
                // Handle success (e.g., update the patient data in the UI)
-               console.log("Diagnosis added.", res);
                // You can update the patient data in 'details' state with the updated diagnosis
                setDetails((prevDetails) =>
                   prevDetails.map((patient) =>
@@ -70,7 +66,6 @@ export default function ICD10Search({
          const response = await axios.get(
             `https://clinicaltables.nlm.nih.gov/api/icd10cm/v3/search?sf=code,name&terms=${searchTerm}`
          );
-         console.log({ response });
          setResults(response.data[3]);
       } catch (error) {
          console.error("Error fetching data:", error);
