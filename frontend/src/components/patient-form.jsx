@@ -11,7 +11,7 @@ export default function Form({ patientToUpdate, updatePatient }) {
    };
 
    //Handle both create and update in one form: ppdate the patient, otherwise create a new patient
-   async function handleSubmit(e) {
+   function handleSubmit(e) {
       if (patientToUpdate) {
          updatePatient(formData);
       } else {

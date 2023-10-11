@@ -7,94 +7,12 @@ import PatientForm from "../components/patient-form";
 import ICD10Search from "../components/icd";
 
 export default function Patients() {
-   const [details, setDetails] = useState([]);
-   const [showForm, setShowForm] = useState(false);
+   const [details, setDetails] = useState([]); // State to store the patient data
+   const [showForm, setShowForm] = useState(false); // State to track if form is shown or hidden
    const [patientToUpdate, setPatientToUpdate] = useState(null); // State to store the patient data for editing
-   const [selectedPatient, setSelectedPatient] = useState(null);
-   const [selectedDiagnosis, setSelectedDiagnosis] = useState(null);
+   const [selectedPatient, setSelectedPatient] = useState(null); // State to store the patient data for diagnosis
+   const [selectedDiagnosis, setSelectedDiagnosis] = useState(null); // State to store selected diagnosis
    const [isEditing, setIsEditing] = useState(false); // State to track if we are editing
-
-   // Handle the "Add Diagnosis" button click
-   //click assigns patientID
-   const handleDiagnosisButtonClick = (patient) => {
-      // Set the selected patient ID
-      setSelectedPatient(patient.id);
-      setPatientToUpdate(patient);
-   };
-
-   useEffect(() => {
-      axios
-         .get("http://localhost:8000/api/patients")
-         .then((res) => {
-            const data = res.data;
-            setDetails(data);
-         })
-         .catch((err) => {
-            console.log(err);
-         });
-   }, []);
-
-   const handleDelete = (patientId) => {
-      axios
-         .delete(`http://localhost:8000/api/patients/${patientId}`)
-         .then((res) => {
-            // Handle success (e.g., remove the patient from the UI)
-            setDetails((prevDetails) =>
-               prevDetails.filter((patient) => patient.id !== patientId)
-            );
-            console.log("Patient removed.", res);
-         })
-         .catch((err) => {
-            console.error("Error deleting patient:", err);
-            if (err.response) {
-               // Log the server response if available
-               console.error("Server Response:", err.response.data);
-            }
-            // Handle the error, e.g., display an error message
-         });
-   };
-
-   const handleEdit = (patient) => {
-      // If the Edit button is clicked, set the patient to update and show the form
-      setPatientToUpdate(patient);
-      setIsEditing(true);
-      setShowForm(true);
-   };
-
-   const updatePatient = (updatedFormData) => {
-      // Send a PUT request to update the patient data
-      axios
-         .put(`http://localhost:8000/api/patients/${patientToUpdate.id}/`, {
-            first_name: updatedFormData.firstName,
-            last_name: updatedFormData.lastName,
-            age: updatedFormData.age,
-         })
-         .then((res) => {
-            // Handle success (e.g., update the patient data in the UI)
-            console.log("Success!", res);
-            // Here, you can update the patient data in 'details' state with the updatedData
-            setDetails((prevDetails) =>
-               prevDetails.map((patient) =>
-                  patient.id === patientToUpdate.id
-                     ? { ...patient, ...updatedFormData }
-                     : patient
-               )
-            );
-            // Clear the patientToUpdate state and hide the form
-            setPatientToUpdate(null);
-            setIsEditing(false); // Set back to non-editing mode
-            setShowForm(false);
-            console.log("Patient updated.", res);
-         })
-         .catch((err) => {
-            console.error("Error updating patient:", err);
-            if (err.response) {
-               // Log the server response if available
-               console.error("Server Response:", err.response.data);
-            }
-            // Handle the error, e.g., display an error message
-         });
-   };
 
    const columns = [
       { field: "id", headerName: "ID", flex: 0.5, minWidth: 150 },
@@ -148,9 +66,8 @@ export default function Patients() {
          sortable: false,
          flex: 0.5,
          minWidth: 150,
-         // valueGetter: (params) =>
-         //    `${params.row.firstName || ""} ${params.row.lastName || ""}`,
          renderCell: (params) => {
+            //If there is a diagnosis, show it. If there isn't, display the "Add Diagnosis" button
             if (params.row.diagnosis) {
                return <div>{params.row.diagnosis}</div>;
             } else {
@@ -175,6 +92,91 @@ export default function Patients() {
       diagnosis: patient.diagnosis,
    }));
 
+   //Get patients from the database
+   useEffect(() => {
+      axios
+         .get("http://localhost:8000/api/patients")
+         .then((res) => {
+            const data = res.data;
+            setDetails(data);
+         })
+         .catch((err) => {
+            console.log(err);
+         });
+   }, []);
+
+   //Delete a patient
+   const handleDelete = (patientId) => {
+      axios
+         //Send a delete request to remove a patient data from the database
+         .delete(`http://localhost:8000/api/patients/${patientId}`)
+         .then((res) => {
+            // Delete the patient from the frontend and display remaining patients
+            setDetails((prevDetails) =>
+               prevDetails.filter((patient) => patient.id !== patientId)
+            );
+            console.log("Patient removed.", res);
+         })
+         .catch((err) => {
+            console.error("Error deleting patient:", err);
+            if (err.response) {
+               // Log the server response if available
+               console.error("Server Response:", err.response.data);
+            }
+         });
+   };
+
+   // Update a patient
+   const updatePatient = (updatedFormData) => {
+      axios
+         // Send a PUT request to update the patient data in the database
+         .put(`http://localhost:8000/api/patients/${patientToUpdate.id}/`, {
+            //Reformat data: snake to camel case because of django backend and js frontend
+            first_name: updatedFormData.firstName,
+            last_name: updatedFormData.lastName,
+            age: updatedFormData.age,
+         })
+         .then((res) => {
+            // Update the patient data on the frontend
+            console.log("Success!", res);
+            // Update the patient data in 'details' state with the updatedFormData
+            setDetails((prevDetails) =>
+               prevDetails.map((patient) =>
+                  patient.id === patientToUpdate.id
+                     ? { ...patient, ...updatedFormData }
+                     : patient
+               )
+            );
+            // Clear the patientToUpdate state and hide the form
+            setPatientToUpdate(null);
+            setIsEditing(false); // Set back to non-editing mode
+            setShowForm(false);
+            console.log("Patient updated.", res);
+         })
+         .catch((err) => {
+            console.error("Error updating patient:", err);
+            if (err.response) {
+               // Log the server response if available
+               console.error("Server Response:", err.response.data);
+            }
+         });
+   };
+
+   // If the Edit button is clicked, set the patient to update and show the form
+   const handleEdit = (patient) => {
+      setPatientToUpdate(patient);
+      setIsEditing(true);
+      setShowForm(true);
+   };
+
+   // Handle the "Add Diagnosis" button click
+   const handleDiagnosisButtonClick = (patient) => {
+      // Set the selected patient ID
+      setSelectedPatient(patient.id);
+      // Set the selected patient data
+      setPatientToUpdate(patient);
+   };
+
    const toggleForm = () => {
       setShowForm(!showForm);
    };
@@ -188,7 +190,7 @@ export default function Patients() {
                   {showForm && (
                      <PatientForm
                         updatePatient={updatePatient} // Pass the updatePatient function to the form component
-                        patientToUpdate={patientToUpdate} // Pass the patient data for editing
+                        patientToUpdate={patientToUpdate} // Pass the patient data for editing to the form component
                      />
                   )}
                </div>
@@ -228,6 +230,7 @@ export default function Patients() {
             </div>
             <div className="flex w-1/3">
                <ICD10Search
+                  //Pass all of this data to the form component
                   selectedDiagnosis={selectedDiagnosis}
                   setSelectedDiagnosis={setSelectedDiagnosis}
                   patientId={selectedPatient}
