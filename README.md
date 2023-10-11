@@ -28,5 +28,4 @@ The concept for my app is a basic patient chart. A medical provider can create, 
    -  navigate to `backend/`
    -  `python3 manage.py runserver`
 -  Docker:
-   -  `pip install`
    -  `docker compose up --build`
