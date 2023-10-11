@@ -13,6 +13,12 @@ export default function Patients() {
    const [selectedPatient, setSelectedPatient] = useState(null); // State to store the patient data for diagnosis
    const [selectedDiagnosis, setSelectedDiagnosis] = useState(null);
    const [isEditing, setIsEditing] = useState(false);
+   const [sortModel, setSortModel] = useState([
+      {
+         field: "id",
+         sort: "asc", // Ascending order
+      },
+   ]);
 
    const columns = [
       { field: "id", headerName: "ID", flex: 0.5, minWidth: 150 },
@@ -113,7 +119,6 @@ export default function Patients() {
             setDetails((prevDetails) =>
                prevDetails.filter((patient) => patient.id !== patientId)
             );
-            console.log("Patient removed.", res);
          })
          .catch((err) => {
             console.error("Error deleting patient:", err);
@@ -208,6 +213,7 @@ export default function Patients() {
                   <DataGrid
                      rows={rows}
                      columns={columns}
+                     sortModel={sortModel}
                      initialState={{
                         pagination: {
                            paginationModel: { page: 0, pageSize: 5 },
@@ -215,6 +221,9 @@ export default function Patients() {
                      }}
                      pageSizeOptions={[5, 10]}
                      checkboxSelection
+                     onSortModelChange={(newSortModel) =>
+                        setSortModel(newSortModel)
+                     }
                   />
                </div>
             </div>
