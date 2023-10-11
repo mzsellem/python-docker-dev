@@ -63,7 +63,7 @@ export default function Form({ patientToUpdate, updatePatient }) {
                />
             </div>
             <div>
-               <label>Diagnosis:&nbsp;</label>
+               <label>ICD-10 Code:&nbsp;</label>
                <input
                   className="border"
                   type="text"

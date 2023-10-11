@@ -67,10 +67,10 @@ export default function Patients() {
       },
       {
          field: "diagnosis",
-         headerName: "Diagnosis",
+         headerName: "ICD-10 Code",
          sortable: true,
          flex: 0.5,
-         minWidth: 150,
+         minWidth: 180,
          renderCell: (params) => {
             //If there is a diagnosis, show it. If there isn't, display the "Add Diagnosis" button
             if (params.row.diagnosis) {
@@ -193,7 +193,7 @@ export default function Patients() {
          <div className="flex justify-center">
             <div className="flex flex-col w-screen">
                <div className="flex w-screen">
-                  <div className="flex text-3xl mb-4">Patients</div>
+                  <div className="flex text-3xl mb-4 ml-4">Patients</div>
                   &nbsp; &nbsp;
                   <div className="flex">
                      <button
@@ -210,7 +210,7 @@ export default function Patients() {
          </div>
          <div className="flex w-screen">
             <div className="flex w-2/3">
-               <div>
+               <div className="ml-4">
                   <DataGrid
                      rows={rows}
                      columns={columns}
