@@ -30,57 +30,52 @@ export default function Form({ patientToUpdate, updatePatient }) {
    }
 
    return (
-      patientToUpdate && (
-         <form onSubmit={handleSubmit}>
-            <div className="flex items-center space-x-4">
-               <div>
-                  <label>Last Name:&nbsp;</label>
-                  <input
-                     className="border"
-                     type="text"
-                     name="lastName"
-                     value={formData.lastName}
-                     onChange={handleChange}
-                  />
-               </div>
-               <div>
-                  <label>First Name:&nbsp;</label>
-                  <input
-                     className="border"
-                     type="text"
-                     name="firstName"
-                     value={formData.firstName}
-                     onChange={handleChange}
-                  />
-               </div>
-               <div>
-                  <label>Age:&nbsp;</label>
-                  <input
-                     className="border"
-                     type="text"
-                     name="age"
-                     value={formData.age}
-                     onChange={handleChange}
-                  />
-               </div>
-               <div>
-                  <label>Diagnosis:&nbsp;</label>
-                  <input
-                     className="border"
-                     type="text"
-                     name="diagnosis"
-                     value=""
-                     disabled
-                  />
-               </div>
-               <button
-                  className="navbarblue rounded text-white p-2"
-                  type="submit"
-               >
-                  Save
-               </button>
+      <form onSubmit={handleSubmit}>
+         <div className="flex items-center space-x-4">
+            <div>
+               <label>Last Name:&nbsp;</label>
+               <input
+                  className="border"
+                  type="text"
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleChange}
+               />
             </div>
-         </form>
-      )
+            <div>
+               <label>First Name:&nbsp;</label>
+               <input
+                  className="border"
+                  type="text"
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleChange}
+               />
+            </div>
+            <div>
+               <label>Age:&nbsp;</label>
+               <input
+                  className="border"
+                  type="text"
+                  name="age"
+                  value={formData.age}
+                  onChange={handleChange}
+               />
+            </div>
+            <div>
+               <label>Diagnosis:&nbsp;</label>
+               <input
+                  className="border"
+                  type="text"
+                  name="diagnosis"
+                  value=""
+                  disabled
+               />
+            </div>
+            <button className="navbarblue rounded text-white p-2" type="submit">
+               Save
+            </button>
+         </div>
+      </form>
    );
 }
