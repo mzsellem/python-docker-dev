@@ -68,7 +68,7 @@ export default function Form({ patientToUpdate, updatePatient }) {
                   type="text"
                   name="diagnosis"
                   value={formData.diagnosis}
-                  onChange={handleChange}
+                  // onChange={handleChange}
                />
             </div>
             <button className="navbarblue rounded text-white p-2" type="submit">

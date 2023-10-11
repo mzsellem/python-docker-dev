@@ -12,6 +12,7 @@ export default function Patients() {
    const [patientToUpdate, setPatientToUpdate] = useState(null); // State to store the patient data for editing
    const [selectedPatient, setSelectedPatient] = useState(null);
    const [selectedDiagnosis, setSelectedDiagnosis] = useState(null);
+   const [isEditing, setIsEditing] = useState(false); // State to track if we are editing
 
    // Handle the "Add Diagnosis" button click
    //click assigns patientID
@@ -53,9 +54,9 @@ export default function Patients() {
    };
 
    const handleEdit = (patient) => {
-      // Set the patient data to be updated in the state
+      // If the Edit button is clicked, set the patient to update and show the form
       setPatientToUpdate(patient);
-      // Show the form for editing
+      setIsEditing(true);
       setShowForm(true);
    };
 
@@ -81,6 +82,7 @@ export default function Patients() {
             );
             // Clear the patientToUpdate state and hide the form
             setPatientToUpdate(null);
+            setIsEditing(false); // Set back to non-editing mode
             setShowForm(false);
             console.log("Patient updated.", res);
          })
