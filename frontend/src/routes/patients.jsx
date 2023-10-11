@@ -62,8 +62,7 @@ export default function Patients() {
       {
          field: "diagnosis",
          headerName: "Diagnosis",
-         description: "This column has a value getter and is not sortable.",
-         sortable: false,
+         sortable: true,
          flex: 0.5,
          minWidth: 150,
          renderCell: (params) => {
