@@ -29,7 +29,9 @@ export default function Patients() {
             const data = res.data;
             setDetails(data);
          })
-         .catch((err) => {});
+         .catch((err) => {
+            console.log(err);
+         });
    }, []);
 
    const handleDelete = (patientId) => {

@@ -31,14 +31,15 @@ export default function ICD10Search({
          // Send a PUT request to update the patient's diagnosis
          axios
             .put(`http://localhost:8000/api/patients/${patientId}/`, {
+               //payload
                diagnosis: selectedDiagnosis,
+               //snake to camel case because of django backend and js frontend
                age: patientInfo.age,
                last_name: patientInfo.lastName,
                first_name: patientInfo.firstName,
             })
             .then((res) => {
-               // Handle success (e.g., update the patient data in the UI)
-               // You can update the patient data in 'details' state with the updated diagnosis
+               // Handle success: update the patient data in 'details' state with the updated diagnosis
                setDetails((prevDetails) =>
                   prevDetails.map((patient) =>
                      patient.id === patientId
@@ -51,16 +52,18 @@ export default function ICD10Search({
                setSelectedDiagnosis(null);
             })
             .catch((err) => {
+               // Handle the error
                console.error("Error adding diagnosis:", err);
                if (err.response) {
                   // Log the server response if available
                   console.error("Server Response:", err.response.data);
                }
-               // Handle the error, e.g., display an error message
             });
       }
+      //Watch for changes in diagnosis and patientId
    }, [selectedDiagnosis, patientId]);
 
+   //Get data from third party api and set results (setResults)
    const handleSearch = async () => {
       try {
          const response = await axios.get(
@@ -105,6 +108,7 @@ export default function ICD10Search({
                         </TableRow>
                      </TableHead>
                      <TableBody>
+                        {/* Display results of ICD10 search */}
                         {results.map((result) => (
                            <TableRow key={result[0]}>
                               <TableCell>{result[0]}</TableCell>
