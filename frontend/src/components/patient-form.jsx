@@ -68,7 +68,7 @@ export default function Form({ patientToUpdate, updatePatient }) {
                   type="text"
                   name="diagnosis"
                   value=""
-                  readOnly
+                  disabled
                />
             </div>
             <button className="navbarblue rounded text-white p-2" type="submit">
